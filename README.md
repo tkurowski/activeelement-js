@@ -107,15 +107,28 @@ The `type` property defines what exactly is being accessed
 
 ### descriptor property
 
-By specifying descriptor's `property` or `prop` or `name` property
-we can e.g. declare which element's property is to be accessed, though the meaning of its value depends on the type. If the property is not specified, it defaults to the key that the descriptor is registered with:
+Descriptor's `property` (or `prop` or `name`) allows to specify which
+feature of the element is to be accessed. E.g. if the `type` is `"attribute"`
+and the `property` is `"src"`, then the descriptor will get/set 'src' attribute
+of the resolved element; if the `type` is `"property"` and the `prop` is
+`"innerHTML"`, then the 'innerHTML' property is accessed. 
 
-	ActiveElement.defineDescriptor(myObject, 'innerHTML', {'type': 'property'});
+If the property/name is not specified, it defaults to the key
+that the descriptor is registered with:
+
+	ActiveElement.defineDescriptor(myObject,
+                                   'innerHTML',
+                                   {'type': 'property'});
 	// the property to access is the key: 'innerHTML',
 	// if we want to change they key, we need to
 	// explicitly declare the property:
-	ActiveElement.defineDescriptor(myObject, 'html', {'type': 'property', name: 'innerHTML'}
+	ActiveElement.defineDescriptor(myObject,
+                                   'html',
+                                   {'type': 'property', name: 'innerHTML'}
 	// or "..., prop: 'innerHTML'" or "..., property: 'innerHTML'"
+
+See below for the meaning of desciptor's `property` in context of different
+descriptor's `type`s.
 
 descriptors types
 -----------------------
@@ -150,7 +163,7 @@ Add or remove a class. If not specified, `el` equals "el", so if you put the nod
 
 
 ### `mode`, `classmode`
-- `property` - a list of mutually exclusive class names
+- `property` - a list of mutually exclusive class names (optional)
 - _value_ - class name (a member of the list)
 
 Sets a class ensuring the other classes are removed:
@@ -162,6 +175,9 @@ Sets a class ensuring the other classes are removed:
 	elTrafficLights.color = 'red';
 	elTrafficLights.color = 'yellow';
 	elTrafficLights.color; // 'yellow'
+
+If the `property` is omitted, any (string) value is allowed, otherwise
+the value must either be `null` or must be contained in `property` list.
 	
 
 helpers
